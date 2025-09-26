@@ -38,9 +38,7 @@ def get_access_token():
         "Authorization": f"Basic {credentials}"
     }
     data = {
-        "grant_type": "password",
-        "username": ONCEAPI_USERNAME,
-        "password": ONCEAPI_PASSWORD
+        "grant_type": "client_credentials",
     }
     
     try:
