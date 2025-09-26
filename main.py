@@ -28,10 +28,14 @@ def get_access_token():
     print(f"Getting new token for username: {ONCEAPI_USERNAME}")
     print(f"Password is {'set' if ONCEAPI_PASSWORD else 'NOT SET'}")
     
-    # Get new token
+    # Try method 1: Basic Auth header
+    import base64
+    credentials = base64.b64encode(f"{ONCEAPI_USERNAME}:{ONCEAPI_PASSWORD}".encode()).decode()
+    
     token_url = "https://api.1nce.com/management-api/oauth/token"
     headers = {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": f"Basic {credentials}"
     }
     data = {
         "grant_type": "password",
@@ -41,6 +45,7 @@ def get_access_token():
     
     try:
         print(f"Making request to: {token_url}")
+        print(f"Using Basic Auth with username: {ONCEAPI_USERNAME}")
         response = requests.post(token_url, headers=headers, data=data)
         print(f"1NCE Token Response Status: {response.status_code}")
         print(f"1NCE Token Response: {response.text}")
