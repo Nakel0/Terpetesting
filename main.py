@@ -28,7 +28,7 @@ def get_access_token():
     print(f"Getting new token for username: {ONCEAPI_USERNAME}")
     print(f"Password is {'set' if ONCEAPI_PASSWORD else 'NOT SET'}")
     
-    # Try method 1: Basic Auth header
+    # Use Basic Auth header with client_credentials grant type
     import base64
     credentials = base64.b64encode(f"{ONCEAPI_USERNAME}:{ONCEAPI_PASSWORD}".encode()).decode()
     
@@ -38,12 +38,13 @@ def get_access_token():
         "Authorization": f"Basic {credentials}"
     }
     data = {
-        "grant_type": "client_credentials",
+        "grant_type": "client_credentials"
     }
     
     try:
         print(f"Making request to: {token_url}")
         print(f"Using Basic Auth with username: {ONCEAPI_USERNAME}")
+        print(f"Grant type: client_credentials")
         response = requests.post(token_url, headers=headers, data=data)
         print(f"1NCE Token Response Status: {response.status_code}")
         print(f"1NCE Token Response: {response.text}")
@@ -54,14 +55,14 @@ def get_access_token():
             expires_in = token_data.get("expires_in", 3600)
             token_expires_at = time.time() + expires_in
             
-            print(f" New token obtained, expires in {expires_in} seconds")
+            print(f"✅ New token obtained, expires in {expires_in} seconds")
             return access_token
         else:
-            print(f" Failed to get token: {response.status_code} - {response.text}")
+            print(f"❌ Failed to get token: {response.status_code} - {response.text}")
             return None
         
     except requests.exceptions.RequestException as e:
-        print(f" Error getting access token: {e}")
+        print(f"❌ Error getting access token: {e}")
         return None
 
 @app.route('/sms', methods=['POST', 'GET'])
