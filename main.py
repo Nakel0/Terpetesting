@@ -56,14 +56,14 @@ def get_access_token():
             expires_in = token_data.get("expires_in", 3600)
             token_expires_at = time.time() + expires_in
             
-            print(f"✅ New token obtained, expires in {expires_in} seconds")
+            print(f" New token obtained, expires in {expires_in} seconds")
             return access_token
         else:
-            print(f"❌ Failed to get token: {response.status_code} - {response.text}")
+            print(f" Failed to get token: {response.status_code} - {response.text}")
             return None
         
     except requests.exceptions.RequestException as e:
-        print(f"❌ Error getting access token: {e}")
+        print(f" Error getting access token: {e}")
         return None
 
 @app.route('/sms', methods=['POST', 'GET'])
