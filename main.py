@@ -16,6 +16,8 @@ ONCEAPI_PASSWORD = os.getenv("ONCEAPI_PASSWORD", "")  # Set this in Railway dash
 access_token = None
 token_expires_at = 0
 
+# not valid will re move
+
 def get_access_token():
     """Get or refresh the 1NCE access token"""
     global access_token, token_expires_at
